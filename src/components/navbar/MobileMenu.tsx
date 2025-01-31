@@ -42,14 +42,14 @@ const MobileMenu: React.FC<{ isOpen: boolean; onClose: () => void; menuItems: IM
           bg="white"
           borderBottom="1px solid"
           borderColor="gray.200"
-          py="1.25rem"
+          py="1.5rem"
           px="1rem"
         >
           <Box display="flex" alignItems="center" justifyContent="flex-start">
             <Image src="/assets/Logotype.svg" alt="Logo" width={128} height={64} priority />
           </Box>
 
-          <DrawerCloseTrigger>
+          <DrawerCloseTrigger p="1.5rem">
             <Button variant="ghost" aria-label="Close menu">
               <Icon as={FiChevronDown} fontSize="1.5rem" />
             </Button>
@@ -116,21 +116,6 @@ const MobileMenu: React.FC<{ isOpen: boolean; onClose: () => void; menuItems: IM
             </AccordionRoot>
           </Stack>
         </DrawerBody>
-
-        <DrawerFooter
-          display="flex"
-          justifyContent="center"
-          bg="white"
-          borderTop="1px solid"
-          borderColor="gray.200"
-          py="1rem"
-        >
-          <DrawerCloseTrigger asChild>
-            <Button variant="outline" size="sm">
-              Close Menu
-            </Button>
-          </DrawerCloseTrigger>
-        </DrawerFooter>
       </DrawerContent>
     </DrawerRoot>
   );
