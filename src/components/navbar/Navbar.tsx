@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
     <Box
       as="nav"
       bg="white"
-      shadow="md"
+      // shadow="md"
       position="sticky"
       top="0"
       zIndex="1000"
