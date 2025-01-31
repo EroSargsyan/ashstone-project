@@ -55,7 +55,7 @@ const SearchBar: React.FC<{ searchOpen: boolean; setSearchOpen: (open: boolean) 
           gap="0.5rem"
         >
           <Input
-            placeholder="Type to search..."
+            placeholder="Search posts..."
             size="md"
             variant="outline"
             rounded="md"
