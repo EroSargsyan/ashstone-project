@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Flex, IconButton, Input } from '@chakra-ui/react';
-import { BiSearch } from 'react-icons/bi';
 import { FiMenu } from 'react-icons/fi';
+import { BiSearch } from 'react-icons/bi';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
+import { IMenuItem } from '@/types/types';
+import Image from 'next/image';
 
-const menuItems = [
+const menuItems: IMenuItem[] = [
   {
     value: 'demos',
     title: 'Demos',
@@ -48,11 +50,32 @@ const menuItems = [
 const Navbar: React.FC = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    let lastScroll = 0;
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      setIsVisible(lastScroll > currentScroll || currentScroll < 200);
+      lastScroll = currentScroll;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <Box as="nav" bg="white" shadow="md" position="sticky" top="0" zIndex="1000">
-      <Flex maxW="7xl" mx="auto" px="4" py="2" align="center" justify="space-between">
-        {/* Left: Hamburger for mobile */}
+    <Box
+      as="nav"
+      bg="white"
+      shadow="md"
+      position="sticky"
+      top="0"
+      zIndex="1000"
+      transition="transform 0.3s"
+      transform={isVisible ? 'translateY(0)' : 'translateY(-100%)'}
+    >
+      <Flex maxW="7xl" mx="auto" px="4" py="3" align="center" justify="space-between">
         <IconButton
           aria-label="Open menu"
           display={{ base: 'inline-flex', lg: 'none' }}
@@ -61,25 +84,35 @@ const Navbar: React.FC = () => {
         >
           <FiMenu />
         </IconButton>
-
-        {/* Logo */}
-        <Box fontSize="1.5rem" fontWeight="bold" color="gray.800">
-          LOGOTYPE
-        </Box>
-
-        {/* Desktop Menu */}
-        <Box display={{ base: 'none', lg: 'block' }}>
-          <DesktopMenu menuItems={menuItems} />
-        </Box>
-
-        {/* Right: Search Icon */}
-        <IconButton
-          aria-label="Toggle search"
-          variant="ghost"
-          onClick={() => setSearchOpen((prev) => !prev)}
+        <Flex
+          direction="column"
+          align="center"
+          w="100%"
+          maxW="7xl"
+          mx="auto"
+          px="4"
+          py="3"
+          gap="1rem"
         >
-          <BiSearch />
-        </IconButton>
+          <Flex w="100%" align="center" justify="space-between">
+            <Box w="8rem" h="auto" mx="auto">
+              <Image src="/assets/Logotype.svg" alt="Logo" width={128} height={64} priority />
+            </Box>
+
+            <IconButton
+              aria-label="Toggle search"
+              display="inline-flex"
+              variant="ghost"
+              onClick={() => setSearchOpen((prev) => !prev)}
+            >
+              <BiSearch />
+            </IconButton>
+          </Flex>
+
+          <Box display={{ base: 'none', lg: 'block' }} textAlign="center">
+            <DesktopMenu menuItems={menuItems} />
+          </Box>
+        </Flex>
       </Flex>
 
       {/* Search bar */}
