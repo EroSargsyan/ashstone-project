@@ -18,3 +18,15 @@ export interface IPostPopupProps {
   post: IPost;
   onClose: () => void;
 }
+
+export interface ISubMenuItem {
+  title: string;
+  href: string;
+}
+
+export interface IMenuItem {
+  value: string;
+  title: string;
+  subMenu?: ISubMenuItem[];
+  href?: string;
+}
