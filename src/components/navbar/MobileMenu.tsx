@@ -21,8 +21,9 @@ import {
   AccordionItemContent,
   AccordionRoot,
 } from '@chakra-ui/react';
+import { IMenuItem } from '@/types/types';
 
-const MobileMenu: React.FC<{ isOpen: boolean; onClose: () => void; menuItems: any[] }> = ({
+const MobileMenu: React.FC<{ isOpen: boolean; onClose: () => void; menuItems: IMenuItem[] }> = ({
   isOpen,
   onClose,
   menuItems,
