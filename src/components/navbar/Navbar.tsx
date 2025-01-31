@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, IconButton, Input } from '@chakra-ui/react';
+import Image from 'next/image';
+import { IMenuItem } from '@/types/types';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import { FiMenu } from 'react-icons/fi';
-import { BiSearch } from 'react-icons/bi';
 import DesktopMenu from './DesktopMenu';
 import MobileMenu from './MobileMenu';
-import { IMenuItem } from '@/types/types';
-import Image from 'next/image';
+import SearchBar from './Searchbar';
 
 const menuItems: IMenuItem[] = [
   {
@@ -48,8 +48,8 @@ const menuItems: IMenuItem[] = [
 ];
 
 const Navbar: React.FC = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -79,34 +79,21 @@ const Navbar: React.FC = () => {
         <IconButton
           aria-label="Open menu"
           display={{ base: 'inline-flex', lg: 'none' }}
-          onClick={() => setMenuOpen(true)}
+          onClick={() => setMobileMenuOpen(true)}
           variant="ghost"
         >
           <FiMenu />
         </IconButton>
-        <Flex
-          direction="column"
-          align="center"
-          w="100%"
-          maxW="7xl"
-          mx="auto"
-          px="4"
-          py="3"
-          gap="1rem"
-        >
+
+        <Flex direction="column" align="center" w="100%" maxW="7xl" mx="auto" gap="1rem">
           <Flex w="100%" align="center" justify="space-between">
             <Box w="8rem" h="auto" mx="auto">
               <Image src="/assets/Logotype.svg" alt="Logo" width={128} height={64} priority />
             </Box>
 
-            <IconButton
-              aria-label="Toggle search"
-              display="inline-flex"
-              variant="ghost"
-              onClick={() => setSearchOpen((prev) => !prev)}
-            >
-              <BiSearch />
-            </IconButton>
+            <Box position="relative" display="flex" alignItems="center">
+              <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
+            </Box>
           </Flex>
 
           <Box display={{ base: 'none', lg: 'block' }} textAlign="center">
@@ -115,15 +102,11 @@ const Navbar: React.FC = () => {
         </Flex>
       </Flex>
 
-      {/* Search bar */}
-      {searchOpen && (
-        <Box px="4" py="2" bg="gray.50">
-          <Input placeholder="Search..." size="md" borderColor="gray.300" rounded="md" autoFocus />
-        </Box>
-      )}
-
-      {/* Mobile Menu */}
-      <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} menuItems={menuItems} />
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        menuItems={menuItems}
+      />
     </Box>
   );
 };
