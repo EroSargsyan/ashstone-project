@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Input, Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import Navbar from '@/components/navbar/Navbar';
 import PostCard from '@/components/cards/PostCard';
 import PostPopup from '@/components/cards/PostPopup';
@@ -29,19 +29,15 @@ const HomePage: React.FC = () => {
     return post.title.toLowerCase().includes(query) || post.text.toLowerCase().includes(query);
   });
 
+  const handleSearchTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <Box>
-      <Navbar />
+      <Navbar searchTerm={searchTerm} handleSearchTerm={handleSearchTerm} />
 
       <Box maxW="7xl" mx="auto" px={4} py={8} mt={4}>
-        <Input
-          placeholder="Search posts..."
-          value={searchTerm}
-          maxW="30vw"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          mb={6}
-        />
-
         <Flex wrap="wrap" gap="1rem">
           {filteredPosts.map((post, index) => (
             <Box
