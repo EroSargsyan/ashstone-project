@@ -16,8 +16,10 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const apiUrl = 'https://cloud.codesupply.co/endpoint/react/data.json';
+
     axios
-      .get('https://cloud.codesupply.co/endpoint/react/data.json')
+      .get(apiUrl)
       .then((response) => {
         setPosts(response.data);
         setFilteredPosts(response.data);
