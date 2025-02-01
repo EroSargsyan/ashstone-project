@@ -53,7 +53,7 @@ const HomePage: React.FC = () => {
     <Box>
       <Navbar searchTerm={searchTerm} handleSearchTerm={handleSearchTerm} />
 
-      <Box maxW="7xl" mx="auto" px={4} py={8} mt={4}>
+      <Box maxW="7xl" mx="auto" mt="3rem" px="3rem">
         {loading ? (
           <Box display="flex" justifyContent="center" alignItems="center" minH="300px">
             <Text fontSize="lg" fontWeight="medium" color="gray.500">
@@ -67,11 +67,11 @@ const HomePage: React.FC = () => {
             </Text>
           </Box>
         ) : (
-          <Flex wrap="wrap" gap="1rem" justify="center">
+          <Flex wrap="wrap" gap="3rem" justify="center">
             {filteredPosts.map((post, index) => (
               <Box
                 key={index}
-                w={{ base: '100%', md: 'calc(50% - 1rem)', lg: 'calc(33.3333% - 1rem)' }}
+                w={{ base: '100%', md: 'calc(50% - 1.5rem)', lg: 'calc(33.333% - 2rem)' }}
                 minH="350px"
                 display="flex"
               >

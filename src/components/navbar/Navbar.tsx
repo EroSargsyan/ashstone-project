@@ -70,14 +70,13 @@ const Navbar: React.FC<{
     <Box
       as="nav"
       bg="white"
-      // shadow="md"
       position="sticky"
       top="0"
       zIndex="1000"
       transition="transform 0.3s"
       transform={isVisible ? 'translateY(0)' : 'translateY(-100%)'}
     >
-      <Flex maxW="7xl" mx="auto" px="4" py="3" align="center" justify="space-between">
+      <Flex maxW="7xl" mx="auto" px="4" pt="4" align="center" justify="space-between">
         <IconButton
           aria-label="Open menu"
           display={{ base: 'inline-flex', lg: 'none' }}
