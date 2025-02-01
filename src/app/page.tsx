@@ -11,6 +11,7 @@ import { IPost } from '@/types/types';
 const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredPosts, setFilteredPosts] = useState<IPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<IPost | null>(null);
 
   useEffect(() => {
@@ -18,16 +19,27 @@ const HomePage: React.FC = () => {
       .get('https://cloud.codesupply.co/endpoint/react/data.json')
       .then((response) => {
         setPosts(response.data);
+        setFilteredPosts(response.data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
 
-  const filteredPosts = posts.filter((post) => {
-    const query = searchTerm.toLowerCase();
-    return post.title.toLowerCase().includes(query) || post.text.toLowerCase().includes(query);
-  });
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      const query = searchTerm.toLowerCase();
+      const filtered = posts.filter(
+        (post) =>
+          post.title.toLowerCase().includes(query) || post.text.toLowerCase().includes(query),
+      );
+      setFilteredPosts(filtered);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm, posts]);
 
   const handleSearchTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
