@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import Navbar from '@/components/navbar/Navbar';
 import PostCard from '@/components/cards/PostCard';
 import PostPopup from '@/components/cards/PostPopup';
@@ -13,6 +13,7 @@ const HomePage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredPosts, setFilteredPosts] = useState<IPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<IPost | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -23,6 +24,9 @@ const HomePage: React.FC = () => {
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -50,18 +54,32 @@ const HomePage: React.FC = () => {
       <Navbar searchTerm={searchTerm} handleSearchTerm={handleSearchTerm} />
 
       <Box maxW="7xl" mx="auto" px={4} py={8} mt={4}>
-        <Flex wrap="wrap" gap="1rem" justify="center">
-          {filteredPosts.map((post, index) => (
-            <Box
-              key={index}
-              w={{ base: '100%', md: 'calc(50% - 1rem)', lg: 'calc(33.3333% - 1rem)' }}
-              minH="350px"
-              display="flex"
-            >
-              <PostCard post={post} onClick={() => setSelectedPost(post)} />
-            </Box>
-          ))}
-        </Flex>
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minH="300px">
+            <Text fontSize="lg" fontWeight="medium" color="gray.500">
+              Loading posts...
+            </Text>
+          </Box>
+        ) : filteredPosts.length === 0 ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minH="300px">
+            <Text fontSize="lg" fontWeight="medium" color="gray.500">
+              No posts found.
+            </Text>
+          </Box>
+        ) : (
+          <Flex wrap="wrap" gap="1rem" justify="center">
+            {filteredPosts.map((post, index) => (
+              <Box
+                key={index}
+                w={{ base: '100%', md: 'calc(50% - 1rem)', lg: 'calc(33.3333% - 1rem)' }}
+                minH="350px"
+                display="flex"
+              >
+                <PostCard post={post} onClick={() => setSelectedPost(post)} />
+              </Box>
+            ))}
+          </Flex>
+        )}
       </Box>
 
       {selectedPost && <PostPopup post={selectedPost} onClose={() => setSelectedPost(null)} />}
