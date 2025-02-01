@@ -50,11 +50,13 @@ const HomePage: React.FC = () => {
       <Navbar searchTerm={searchTerm} handleSearchTerm={handleSearchTerm} />
 
       <Box maxW="7xl" mx="auto" px={4} py={8} mt={4}>
-        <Flex wrap="wrap" gap="1rem">
+        <Flex wrap="wrap" gap="1rem" justify="center">
           {filteredPosts.map((post, index) => (
             <Box
               key={index}
               w={{ base: '100%', md: 'calc(50% - 1rem)', lg: 'calc(33.3333% - 1rem)' }}
+              minH="350px"
+              display="flex"
             >
               <PostCard post={post} onClick={() => setSelectedPost(post)} />
             </Box>
