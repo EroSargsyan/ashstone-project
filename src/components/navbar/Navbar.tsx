@@ -47,9 +47,11 @@ const menuItems: IMenuItem[] = [
   { value: 'buy-now', title: 'Buy Now', href: '#' },
 ];
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<{
+  searchTerm: string;
+  handleSearchTerm: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({ searchTerm, handleSearchTerm }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -92,7 +94,7 @@ const Navbar: React.FC = () => {
             </Box>
 
             <Box position="relative" display="flex" alignItems="center">
-              <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen} />
+              <SearchBar searchTerm={searchTerm} handleSearchTerm={handleSearchTerm} />
             </Box>
           </Flex>
 
