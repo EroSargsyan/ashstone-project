@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const apiUrl = 'https://cloud.codesupply.co/endpoint/react/data.json';
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/endpoint/react/data.json`;
 
     axios
       .get(apiUrl)
