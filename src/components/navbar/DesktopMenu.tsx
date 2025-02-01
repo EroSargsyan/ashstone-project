@@ -14,7 +14,7 @@ const DesktopMenu: React.FC<{ menuItems: IMenuItem[] }> = ({ menuItems }) => {
           color="gray.800"
           cursor="pointer"
           px="0.5rem"
-          py="0.5rem"
+          py="1rem"
           rounded="0.25rem"
           _hover={{
             color: 'red.500',
