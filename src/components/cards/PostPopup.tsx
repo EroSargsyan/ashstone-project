@@ -1,6 +1,5 @@
 import { IPostPopupProps } from '@/types/types';
-import { Box, Heading, Text, Stack, IconButton } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Box, Heading, Text, Stack, IconButton, Image } from '@chakra-ui/react';
 import { IoClose } from 'react-icons/io5';
 
 const PostPopup: React.FC<IPostPopupProps> = ({ post, onClose }) => {
